@@ -11,7 +11,6 @@ from panels.sceneGraph import sceneGraph
 from styleSheets import uiStyleSheet
 from widgets import mainMenuBar
 app = QtWidgets.QApplication([])
-USD_FILE_PATH = '/media/projects/python/draftAlot/ui/examples/robot_walk_idle.usdz'
 
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -51,8 +50,8 @@ class MainWindow(QtWidgets.QMainWindow):
 
 if __name__ == "__main__":
     stage = None
-    with Usd.StageCacheContext(UsdUtils.StageCache.Get()):
-        stage = Usd.Stage.Open(USD_FILE_PATH)
+    #with Usd.StageCacheContext(UsdUtils.StageCache.Get()):
+    #    stage = Usd.Stage.Open(USD_FILE_PATH)
 
     mainWindow = MainWindow(defaultStage=None)
     mainWindow.setWindowTitle("DALE")

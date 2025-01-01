@@ -1,27 +1,58 @@
 #usda 1.0
 
-def "world"
-{
-    def "geo"
-    {
-        def Mesh "board1" (
-            prepend apiSchemas = ["MaterialBindingAPI"]
-        )
-        {
-            float3[] extent = [(-600, -1200, -8), (600, 1200, 8)]
-            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
-            int[] faceVertexIndices = [0, 1, 2, 3, 4, 5, 6, 7, 0, 4, 7, 3, 1, 5, 6, 2, 0, 1, 5, 4, 3, 2, 6, 7]
-            rel material:binding = </materials/tasiOak>
-            point3f[] points = [(-600, -1200, -8), (600, -1200, -8), (600, 1200, -8), (-600, 1200, -8), (-600, -1200, 8), (600, -1200, 8), (600, 1200, 8), (-600, 1200, 8)]
-            texCoord2f[] primvars:st = [(0, 0), (1, 0), (1, 1), (0, 1), (0, 0), (1, 0), (1, 1), (0, 1), (0, 0), (1, 0), (1, 1), (0, 1), (0, 0), (1, 0), (1, 1), (0, 1), (0, 0), (1, 0), (1, 1), (0, 1), (0, 0), (1, 0), (1, 1), (0, 1)] (
-                interpolation = "faceVarying"
-            )
-        }
-    }
-}
-
 def "materials"
 {
+    def "transformMaterials"
+    {
+        def Material "xMat"
+        {
+            token outputs:surface.connect = </materials/transformMaterials/xMat/xShader.outputs:surface>
+
+            def Shader "xShader"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (1, 0, 0)
+                token outputs:surface
+            }
+        }
+
+        def Material "yMat"
+        {
+            token outputs:surface.connect = </materials/transformMaterials/yMat/yShader.outputs:surface>
+
+            def Shader "yShader"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0, 1, 0)
+                token outputs:surface
+            }
+        }
+
+        def Material "zMat"
+        {
+            token outputs:surface.connect = </materials/transformMaterials/zMat/zShader.outputs:surface>
+
+            def Shader "zShader"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0, 0, 1)
+                token outputs:surface
+            }
+        }
+
+        def Material "highMat"
+        {
+            token outputs:surface.connect = </materials/transformMaterials/highMat/highlightShader.outputs:surface>
+
+            def Shader "highlightShader"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (1, 1, 0)
+                token outputs:surface
+            }
+        }
+    }
+
     def Material "tasiOak"
     {
         token inputs:frame:stPrimvarName = "st"
@@ -49,6 +80,26 @@ def "materials"
             asset inputs:file = @/media/projects/python/draftAlot/ui/assets/textures/polytech/tasmanian-oak.jpg@
             float2 inputs:st.connect = </materials/tasiOak/stReader.outputs:result>
             float3 outputs:rgb
+        }
+    }
+}
+
+def "world"
+{
+    def "geo"
+    {
+        def Mesh "board1" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            float3[] extent = [(-600, -1200, -8), (600, 1200, 8)]
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 1, 2, 3, 4, 5, 6, 7, 0, 4, 7, 3, 1, 5, 6, 2, 0, 1, 5, 4, 3, 2, 6, 7]
+            rel material:binding = </materials/tasiOak>
+            point3f[] points = [(-600, -1200, -8), (600, -1200, -8), (600, 1200, -8), (-600, 1200, -8), (-600, -1200, 8), (600, -1200, 8), (600, 1200, 8), (-600, 1200, 8)]
+            texCoord2f[] primvars:st = [(0, 0), (1, 0), (1, 1), (0, 1), (0, 0), (1, 0), (1, 1), (0, 1), (0, 0), (1, 0), (1, 1), (0, 1), (0, 0), (1, 0), (1, 1), (0, 1), (0, 0), (1, 0), (1, 1), (0, 1), (0, 0), (1, 0), (1, 1), (0, 1)] (
+                interpolation = "faceVarying"
+            )
         }
     }
 }
